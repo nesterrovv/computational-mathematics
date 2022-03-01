@@ -28,15 +28,9 @@ public class Main {
             System.out.println();
             System.out.println("Values of variables for your system of linear equations:");
             printVector(answers);
-            /*
-            TODO:
-            1. fix matrix - add vector with b1...bn - DONE
-            2. choose method of matrix input for user
-            3. running logic
-            4. first and second step of gauss method -
-            5. check if solution is exists
-            6. check if equations number == number of unknown variables
-             */
+            System.out.println();
+            System.out.println("\u001B[34m" + "Residual of these calculating = " + calculateResidual(matrix, answers) +
+                    "\u001B[0m");
         } catch (NoSuchElementException noSuchElementException) {
             System.err.println("\u001B[32m" + "Finishing a program..." + "\u001B[0m");
             System.exit(-1);
@@ -105,7 +99,7 @@ public class Main {
     public static void printMatrix(double[][] matrix) {
         for (double[] doubles : matrix) { //Cycles through rows
             for (double aDouble : doubles) {//Cycles through columns
-                System.out.printf("%-12.4f", new Double(aDouble)); //change the %5d to however much space you want
+                System.out.printf("%-12.4f", aDouble); //change the %5d to however much space you want
             }
             System.out.println(); //Makes a new row
         }
@@ -144,21 +138,14 @@ public class Main {
 
     public static double[][] generateRandomMatrix() {
         Scanner scanner = new Scanner(System.in);
-        int bIndex = 1;
         showMatrixExample();
         int dimension = receiveDimension("number of unknown variables");
         double[][] matrix = new double[dimension][dimension + 1];
         System.out.println("Random matrix generating...");
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension + 1; j++) {
-                if (j == dimension + 1) {
-                    double coefficient = Math.random() * 100;
-                    matrix[i - 1][j - 1] = coefficient;
-                    bIndex += 1;
-                } else {
-                    double coefficient = Math.random() * 100;
-                    matrix[i - 1][j - 1] = coefficient;
-                }
+                double coefficient = Math.random() * 100;
+                matrix[i - 1][j - 1] = coefficient;
             }
         }
         System.out.println();
@@ -204,18 +191,18 @@ public class Main {
                     copyOfMatrix[i][j] = matrix[i][j];
                 }
             }
-            for (int k = 0; k < dimension; k++) { //k-номер строки
-                for (int i = 0; i < dimension + 1; i++) //i-номер столбца
-                    copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k]; //Деление k-строки на первый член !=0 для преобразования его в единицу
-                for (int i = k + 1; i < dimension; i++) { // i-номер следующей строки после k
-                    double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k]; //Коэффициент
-                    for (int j = 0; j < dimension + 1; j++) {//j-номер столбца следующей строки после k
-                        copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient; //Зануление элементов матрицы ниже первого члена, преобразованного в единицу
+            for (int k = 0; k < dimension; k++) { // k is number of line
+                for (int i = 0; i < dimension + 1; i++) // i is number of column
+                    copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k]; // divide k-number line to first item != 0
+                for (int i = k + 1; i < dimension; i++) { // i lines which are follows for the k line
+                    double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k];
+                    for (int j = 0; j < dimension + 1; j++) { // j is column which are follows for the k column
+                        copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient; // zeroes
                     }
                 }
-                for (int i = 0; i < dimension; i++) { //Обновление, внесение изменений в начальную матрицу
+                for (int i = 0; i < dimension; i++) { // update initial matrix
                     for (int j = 0; j < dimension + 1; j++) {
-                        if (new Double(copyOfMatrix[i][j]).equals((Double.POSITIVE_INFINITY - Double.POSITIVE_INFINITY))
+                        if (new Double(copyOfMatrix[i][j]).equals((0.0))
                                 || (copyOfMatrix[i][j] * (-1) == 0)) {
                             matrix[i][j] = 0;
                         } else matrix[i][j] = copyOfMatrix[i][j];
@@ -232,17 +219,17 @@ public class Main {
                 throw new NoSolutionException();
             }
             //Обратный ход (Зануление верхнего правого угла)
-            for (int k = dimension - 1; k > -1; k--) //k-номер строки
+            for (int k = dimension - 1; k > -1; k--) // k is number of line
             {
-                for (int i = dimension; i > -1; i--) { //i-номер столбца
+                for (int i = dimension; i > -1; i--) { // i is number of column
                     copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k];
                 }
-                for (int i = k - 1; i > -1; i--) { //i-номер следующей строки после k
+                for (int i = k - 1; i > -1; i--) { // i lines which are follows for the k line
                     double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k];
-                    for (int j = dimension; j > -1; j--) //j-номер столбца следующей строки после k
+                    for (int j = dimension; j > -1; j--) // j is column which are follows for the k column
                         copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient;
                 }
-                //Отделяем от общей матрицы ответы
+                // save clean answers
                 double[] answers = new double[dimension];
                 for (int i = 0; i < dimension; i++) {
                     answers[i] = copyOfMatrix[i][dimension];
@@ -254,5 +241,13 @@ public class Main {
             System.exit(0);
         }
         return null;
+    }
+
+    public static double calculateResidual(double[][] matrix, double[] variables) {
+        double temporaryValue = 0;
+        for (int j = 0; j < matrix[0].length - 1; j++) {
+            temporaryValue += (matrix[0][j] * variables[j]);
+        }
+        return matrix[0][matrix[0].length - 1] - temporaryValue;
     }
 }
