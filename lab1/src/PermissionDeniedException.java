@@ -1,6 +1,6 @@
 public class PermissionDeniedException extends Exception {
 
-    private final String defaultMessage = "File cannot be read! Permission denied!";
+    private final String defaultMessage = "\nFile cannot be read! Permission denied!";
 
     @Override
     public String getMessage() {
