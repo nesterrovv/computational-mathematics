@@ -1,22 +1,33 @@
-import java.io.BufferedReader;
+import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
-            // try run this system
-            double[][] matrix = generateRandomMatrix();
+            System.out.println("Gaussian linear equation solver launched!");
+            System.out.println("Type ctrl + D (or cmd + D for macOS) to exit.");
+            int mood = chooseMood();
+            double[][] matrix;
+            if (mood == 1) {
+                matrix = receiveMatrixFromInput();
+            } else if (mood == 2) {
+                matrix = generateRandomMatrix();
+            } else if (mood == 3) {
+                matrix = receiveMatrixFromFile();
+            } else throw new Exception();
+            System.out.println("Your augmented matrix:");
             printMatrix(matrix);
             System.out.println();
-            double[][] newMatrix = bringMatrixToTriangularForm(matrix);
-            printMatrix(newMatrix);
+            double[] answers = gaussSolution(matrix);
+            System.out.println();
+            System.out.println("Values of variables for your system of linear equations:");
+            printVector(answers);
             /*
             TODO:
             1. fix matrix - add vector with b1...bn - DONE
@@ -29,6 +40,9 @@ public class Main {
         } catch (NoSuchElementException noSuchElementException) {
             System.err.println("\u001B[32m" + "Finishing a program..." + "\u001B[0m");
             System.exit(-1);
+        } catch (Exception exception) {
+            System.err.println("Fatal error. Try again.");
+            System.exit(1);
         }
     }
 
@@ -48,13 +62,32 @@ public class Main {
         }
     }
 
+    public static int chooseMood() {
+            while (true) {
+                try {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("Choose type of data entering. Print only a number:");
+                    System.out.println("1. Enter data manually;");
+                    System.out.println("2. Generate random data;");
+                    System.out.println("3. Read data from file;");
+                    int mood = scanner.nextInt();
+                    if (mood != 1 && mood != 2 && mood != 3) {
+                        throw new InputMismatchException();
+                    }
+                    return mood;
+                } catch (InputMismatchException inputMismatchException) {
+                    System.out.println("\u001B[31m" + "Value must be a number 1, 2 or 3! Try again." + "\u001B[0m");
+                }
+            }
+
+    }
+
     public static double receiveCoefficient(String value) {
         while (true) {
             System.out.print("Enter " + value + ": ");
             try {
                 Scanner scanner = new Scanner(System.in);
-                double coefficient = scanner.nextDouble();
-                return coefficient;
+                return scanner.nextDouble();
             } catch (InputMismatchException inputMismatchException) {
                 System.out.println("\u001B[31m" + "Value must be a number (for example: 1 or 123.45)!" + "\u001B[0m");
             }
@@ -70,11 +103,17 @@ public class Main {
     }
 
     public static void printMatrix(double[][] matrix) {
-        for (int row = 0; row < matrix.length; row++) { //Cycles through rows
-            for (int col = 0; col < matrix[row].length; col++) {//Cycles through columns
-                System.out.printf("%-12.4f", new Double(matrix[row][col])); //change the %5d to however much space you want
+        for (double[] doubles : matrix) { //Cycles through rows
+            for (double aDouble : doubles) {//Cycles through columns
+                System.out.printf("%-12.4f", new Double(aDouble)); //change the %5d to however much space you want
             }
             System.out.println(); //Makes a new row
+        }
+    }
+
+    public static void printVector(double[] vector) {
+        for (int i = 0; i < vector.length; i++) {
+            System.out.println("x(" + (i + 1) + ") = " + vector[i]);
         }
     }
 
@@ -86,7 +125,7 @@ public class Main {
         double[][] matrix = new double[dimension][dimension + 1];
         System.out.println("You need to enter a(i j) values now. Let's try!");
         for (int i = 1; i <= dimension; i++) {
-            for (int j = 1; j <= dimension+1; j++) {
+            for (int j = 1; j <= dimension + 1; j++) {
                 if (j == dimension + 1) {
                     System.out.println("Enter an coefficient b(" + bIndex + ")");
                     double coefficient = receiveCoefficient("value");
@@ -99,6 +138,7 @@ public class Main {
                 }
             }
         }
+        System.out.println();
         return matrix;
     }
 
@@ -121,10 +161,12 @@ public class Main {
                 }
             }
         }
+        System.out.println();
         return matrix;
     }
 
-    public static double[][] receiveMatrixFromFile(int dimension) {
+    public static double[][] receiveMatrixFromFile() {
+        int dimension = receiveDimension("number of unknown variables");
         while (true) {
             try {
                 Scanner pathScanner = new Scanner(System.in);
@@ -143,6 +185,7 @@ public class Main {
                         }
                     }
                 }
+                System.out.println();
                 return matrix;
             } catch (FileNotFoundException fileNotFoundException) {
                 System.err.println("File not found! Check path and try enter it again.");
@@ -152,37 +195,64 @@ public class Main {
         }
     }
 
-    public static double[][] bringMatrixToTriangularForm(double[][] matrix) {
-        int dimension = matrix.length;
-        double[][] copyOfMatrix = new double[dimension][dimension + 1];
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension + 1; j++) {
-                copyOfMatrix[i][j] = matrix[i][j];
-            }
-        }
-        for (int k = 0; k < dimension; k++) { //k-номер строки
-            for (int i = 0; i < dimension + 1; i++) //i-номер столбца
-                copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k]; //Деление k-строки на первый член !=0 для преобразования его в единицу
-            for (int i = k + 1; i < dimension; i++) { // i-номер следующей строки после k
-                double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k]; //Коэффициент
-                for (int j = 0; j < dimension + 1; j++) {//j-номер столбца следующей строки после k
-                    copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient; //Зануление элементов матрицы ниже первого члена, преобразованного в единицу
-                }
-            }
-            for (int i = 0; i < dimension; i++) { //Обновление, внесение изменений в начальную матрицу
+    public static double[] gaussSolution(double[][] matrix) {
+        try {
+            int dimension = matrix.length;
+            double[][] copyOfMatrix = new double[dimension][dimension + 1];
+            for (int i = 0; i < dimension; i++) {
                 for (int j = 0; j < dimension + 1; j++) {
-                    if (new Double(copyOfMatrix[i][j]).equals((Double.POSITIVE_INFINITY - Double.POSITIVE_INFINITY))
-                    || (copyOfMatrix[i][j] * (-1) == 0)) {
-                        matrix[i][j] = 0;
-                    } else matrix[i][j] = copyOfMatrix[i][j];
+                    copyOfMatrix[i][j] = matrix[i][j];
                 }
             }
+            for (int k = 0; k < dimension; k++) { //k-номер строки
+                for (int i = 0; i < dimension + 1; i++) //i-номер столбца
+                    copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k]; //Деление k-строки на первый член !=0 для преобразования его в единицу
+                for (int i = k + 1; i < dimension; i++) { // i-номер следующей строки после k
+                    double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k]; //Коэффициент
+                    for (int j = 0; j < dimension + 1; j++) {//j-номер столбца следующей строки после k
+                        copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient; //Зануление элементов матрицы ниже первого члена, преобразованного в единицу
+                    }
+                }
+                for (int i = 0; i < dimension; i++) { //Обновление, внесение изменений в начальную матрицу
+                    for (int j = 0; j < dimension + 1; j++) {
+                        if (new Double(copyOfMatrix[i][j]).equals((Double.POSITIVE_INFINITY - Double.POSITIVE_INFINITY))
+                                || (copyOfMatrix[i][j] * (-1) == 0)) {
+                            matrix[i][j] = 0;
+                        } else matrix[i][j] = copyOfMatrix[i][j];
+                    }
+                }
+            }
+            System.out.println("Your augmented matrix, reduced to triangular form:");
+            printMatrix(matrix);
+            double determinant = 1;
+            for (int i = 0; i < matrix.length; i++) {
+                determinant *= matrix[i][i];
+            }
+            if (determinant == 0) {
+                throw new NoSolutionException();
+            }
+            //Обратный ход (Зануление верхнего правого угла)
+            for (int k = dimension - 1; k > -1; k--) //k-номер строки
+            {
+                for (int i = dimension; i > -1; i--) { //i-номер столбца
+                    copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k];
+                }
+                for (int i = k - 1; i > -1; i--) { //i-номер следующей строки после k
+                    double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k];
+                    for (int j = dimension; j > -1; j--) //j-номер столбца следующей строки после k
+                        copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient;
+                }
+                //Отделяем от общей матрицы ответы
+                double[] answers = new double[dimension];
+                for (int i = 0; i < dimension; i++) {
+                    answers[i] = copyOfMatrix[i][dimension];
+                }
+                return answers;
+            }
+        } catch (NoSolutionException noSolutionException) {
+            System.err.println(noSolutionException.getMessage());
+            System.exit(0);
         }
-        return matrix;
+        return null;
     }
-
-
-
-
-
 }
