@@ -12,16 +12,17 @@ public class Main {
     public static void main(String[] args) {
         try {
             // try run this system
-            double[][] matrix1 = receiveMatrixFromInput();
-            printMatrix(matrix1);
             double[][] matrix = generateRandomMatrix();
             printMatrix(matrix);
+            System.out.println();
+            double[][] newMatrix = bringMatrixToTriangularForm(matrix);
+            printMatrix(newMatrix);
             /*
             TODO:
-            1. fix matrix - add vector with b1...bn
+            1. fix matrix - add vector with b1...bn - DONE
             2. choose method of matrix input for user
             3. running logic
-            4. first and second step of gauss method
+            4. first and second step of gauss method -
             5. check if solution is exists
             6. check if equations number == number of unknown variables
              */
@@ -149,6 +150,35 @@ public class Main {
                 System.err.println(permissionDeniedException.getMessage());
             }
         }
+    }
+
+    public static double[][] bringMatrixToTriangularForm(double[][] matrix) {
+        int dimension = matrix.length;
+        double[][] copyOfMatrix = new double[dimension][dimension + 1];
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension + 1; j++) {
+                copyOfMatrix[i][j] = matrix[i][j];
+            }
+        }
+        for (int k = 0; k < dimension; k++) { //k-номер строки
+            for (int i = 0; i < dimension + 1; i++) //i-номер столбца
+                copyOfMatrix[k][i] = copyOfMatrix[k][i] / matrix[k][k]; //Деление k-строки на первый член !=0 для преобразования его в единицу
+            for (int i = k + 1; i < dimension; i++) { // i-номер следующей строки после k
+                double coefficient = copyOfMatrix[i][k] / copyOfMatrix[k][k]; //Коэффициент
+                for (int j = 0; j < dimension + 1; j++) {//j-номер столбца следующей строки после k
+                    copyOfMatrix[i][j] = copyOfMatrix[i][j] - copyOfMatrix[k][j] * coefficient; //Зануление элементов матрицы ниже первого члена, преобразованного в единицу
+                }
+            }
+            for (int i = 0; i < dimension; i++) { //Обновление, внесение изменений в начальную матрицу
+                for (int j = 0; j < dimension + 1; j++) {
+                    if (new Double(copyOfMatrix[i][j]).equals((Double.POSITIVE_INFINITY - Double.POSITIVE_INFINITY))
+                    || (copyOfMatrix[i][j] * (-1) == 0)) {
+                        matrix[i][j] = 0;
+                    } else matrix[i][j] = copyOfMatrix[i][j];
+                }
+            }
+        }
+        return matrix;
     }
 
 
