@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public class Main {
 
     /**
-     * Method for implimentation running logic.
+     * Method for implementation running logic.
      * @param args is system args. Not used here.
      */
     public static void main(String[] args) {
@@ -114,9 +114,9 @@ public class Main {
     }
 
     /**
-     * Method for calculating cofactor for detetminant calculating
+     * Method for calculating cofactor for determinant calculating
      * @param mat is given matrix
-     * @param temp is temporary matrix for data stoting
+     * @param temp is temporary matrix for data storing
      * @param p is index for iterating into a cofactor
      * @param q is index for iterating into a cofactor
      * @param n is dimension of given matrix
@@ -196,7 +196,7 @@ public class Main {
 
     /**
      * Method for printing vector-column of values.
-     * @param vector is vector-calumn for displaying.
+     * @param vector is vector-column for displaying.
      */
     public static void printVector(double[] vector) {
         for (int i = 0; i < vector.length; i++) {
