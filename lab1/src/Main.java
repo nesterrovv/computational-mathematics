@@ -6,8 +6,17 @@ import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
+/**
+ * Main class of this lab work. Allows to use Gaussian method
+ * for solving systems of linear equations. Has options for choosing
+ * type of data entering. Calculates residuals.
+ */
 public class Main {
 
+    /**
+     * Method for implimentation running logic.
+     * @param args is system args. Not used here.
+     */
     public static void main(String[] args) {
         try {
             System.out.println("Gaussian linear equation solver launched!");
@@ -42,6 +51,11 @@ public class Main {
         }
     }
 
+    /**
+     * Method for receiving a dimension for matrix (which will be entered later).
+     * @param value is welcome-string for user.
+     * @return dimension which was entered by a user.
+     */
     public static int receiveDimension(String value) {
         while (true) {
             System.out.print("Enter " + value + ": ");
@@ -58,6 +72,10 @@ public class Main {
         }
     }
 
+    /**
+     * Method for choosing data entering mood for user.
+     * @return mood status which selected by a user;
+     */
     public static int chooseMood() {
             while (true) {
                 try {
@@ -78,6 +96,11 @@ public class Main {
 
     }
 
+    /**
+     * Method for receiving a number from user's input.
+     * @param value is welcome-string for user.
+     * @return received coefficient.
+     */
     public static double receiveCoefficient(String value) {
         while (true) {
             System.out.print("Enter " + value + ": ");
@@ -90,6 +113,14 @@ public class Main {
         }
     }
 
+    /**
+     * Method for calculating cofactor for detetminant calculating
+     * @param mat is given matrix
+     * @param temp is temporary matrix for data stoting
+     * @param p is index for iterating into a cofactor
+     * @param q is index for iterating into a cofactor
+     * @param n is dimension of given matrix
+     */
     static void getCofactor(double[][] mat, double[][] temp, int p, int q, int n) {
         int i = 0, j = 0;
         // Looping for each element
@@ -111,6 +142,12 @@ public class Main {
         }
     }
 
+    /**
+     * Method for calculating discriminant of given matrix.
+     * @param matrix is given matrix.
+     * @param dimension is dimension of given matrix.
+     * @return discriminant of given matrix
+     */
     public static double countDeterminantOfMatrix(double[][] matrix, int dimension) {
         int D = 0; // Initialize result
         final int N = dimension-1;
@@ -130,10 +167,12 @@ public class Main {
             // with alternate sign
             sign = -sign;
         }
-
         return D;
     }
 
+    /**
+     * Method for printing example of system of linear equations for user.
+     */
     public static void showMatrixExample() {
         System.out.println("Your system of linear equations looks like this:");
         System.out.println("a(11) * x(1) + a(12) * x(2) + ... + a(1n) * x(n) = b(1)");
@@ -142,6 +181,10 @@ public class Main {
         System.out.println("a(31) * x(1) + a(32) * x(2) + ... + a(3n) * x(n) = b(n)");
     }
 
+    /**
+     * Method for displaying matrix in table representation.
+     * @param matrix is matrix for displaying.
+     */
     public static void printMatrix(double[][] matrix) {
         for (double[] doubles : matrix) { //Cycles through rows
             for (double aDouble : doubles) {//Cycles through columns
@@ -151,12 +194,20 @@ public class Main {
         }
     }
 
+    /**
+     * Method for printing vector-column of values.
+     * @param vector is vector-calumn for displaying.
+     */
     public static void printVector(double[] vector) {
         for (int i = 0; i < vector.length; i++) {
             System.out.println("x(" + (i + 1) + ") = " + vector[i]);
         }
     }
 
+    /**
+     * Method for receiving matrix from user input.
+     * @return entered matrix.
+     */
     public static double[][] receiveMatrixFromInput() {
         int bIndex = 1;
         showMatrixExample();
@@ -181,6 +232,10 @@ public class Main {
         return matrix;
     }
 
+    /**
+     * Matrix for generating matrix with random values.
+     * @return generated matrix.
+     */
     public static double[][] generateRandomMatrix() {
         showMatrixExample();
         int dimension = receiveDimension("number of unknown variables");
@@ -196,6 +251,10 @@ public class Main {
         return matrix;
     }
 
+    /**
+     * Method for receiving matrix from the file
+     * @return matrix which has been read
+     */
     public static double[][] receiveMatrixFromFile() {
         int dimension = receiveDimension("number of unknown variables");
         int counter = 0;
@@ -229,6 +288,12 @@ public class Main {
         }
     }
 
+    /**
+     * Method with Gaussian method realization. Calculated solution
+     * of system of linear equations.
+     * @param matrix is matrix with system coefficients.
+     * @return vector-column of answers.
+     */
     public static double[] gaussSolution(double[][] matrix) {
         try {
             int dimension = matrix.length;
