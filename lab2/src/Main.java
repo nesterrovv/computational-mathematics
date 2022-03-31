@@ -2,8 +2,15 @@ import methods.BisectionMethodSolver;
 import methods.ChordMethodSolver;
 import methods.SimpleIterationMethodSolver;
 
+/**
+ * Main class of this program. Demonstrates program working
+ */
 public class Main {
 
+    /**
+     * Entry point. Runs demonstration of this lab work
+     * @param args is system arguments. Not used here
+     */
     public static void main(String[] args) {
         System.out.println("Lab work #2 demonstrating system is started!");
         System.out.println("\n\n\n\n\n");
@@ -26,6 +33,6 @@ public class Main {
         simpleIterationMethodSolver.solveSystemOfEquations();
         System.out.println("\n\n\n\n\n");
         System.out.println("Lab work #2 demonstrating system is finished!");
-
     }
+    
 }

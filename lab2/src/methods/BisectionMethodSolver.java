@@ -2,8 +2,17 @@ package methods;
 
 import input.DataReceiver;
 
+/**
+ * Class with using bisection method for equations solving
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 3/29/2022
+ */
 public class BisectionMethodSolver {
 
+    /**
+     * Method with bisection method realization. Prints solution to stdout
+     */
     public void solveEquation() {
         DataReceiver receiver = new DataReceiver();
         double[] coefficients = receiver.receiveCoefficients();

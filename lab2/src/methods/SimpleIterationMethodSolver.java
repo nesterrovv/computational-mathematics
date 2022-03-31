@@ -2,8 +2,17 @@ package methods;
 
 import input.DataReceiver;
 
+/**
+ * Class with using fixed point iteration method for equations system solving
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 3/29/2022
+ */
 public class SimpleIterationMethodSolver {
 
+    /**
+     * Method with fixed point iteration method realization. Prints solution to stdout
+     */
     public void solveSystemOfEquations() {
         System.out.println("Fixed point iteration method for nonlinear equations system solving.");
         DataReceiver receiver = new DataReceiver();

@@ -2,44 +2,73 @@ package input;
 
 import java.util.*;
 
+/**
+ * Class for receiving all necessary data (coefficients, necessary accuracy, equations, system of equations)
+ * from user
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 3/29/2022
+ */
 public class DataReceiver {
 
+    /**
+     * Method for counting value of first function
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveFirstEquation(double x) {
         return Math.pow(x, 2) + 5 * x + 7;
     }
 
+    /**
+     * Method for counting value of second function
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveSecondEquation(double x) {
         return Math.pow(x, 3) + Math.sqrt(x);
     }
 
+    /**
+     * Method for counting value of first function from first system of equations
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveFirstFuncFromFirstSystem(double x) {
         return Math.sin(x + 1) - x - 1.2;
     }
 
+    /**
+     * Method for counting value of second function from first system of equations
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveSecondFuncFromFirstSystem(double x) {
         return 1 - Math.cos(x) / 2 - x;
     }
 
+    /**
+     * Method for counting value of first function from second system of equations
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveFirstFuncFromSecondSystem(double x) {
         return Math.pow(x, 3) + Math.sqrt(x);
     }
 
+    /**
+     * Method for counting value of second function from second system of equations
+     * @param x is function argument
+     * @return function value
+     */
     public final double solveSecondFuncFromSecondSystem(double x) {
         return Math.pow(x, 2) + 2 * x - 3;
     }
 
-    public final double[] receiveFirstSystem(double x1, double x2) {
-        double answer1 = Math.sin(x1 + 1) - x1 - 1.2;
-        double answer2 = 1 - Math.cos(x2) / 2 - x2;
-        return new double[] {answer1, answer2};
-    }
-
-    public final double[] receiveSecondSystem(double x1, double x2) {
-        double answer1 = Math.pow(x1, 2) + 2 * x1 - 3;
-        double answer2 = Math.pow(x2, 3) - 5;
-        return new double[] {answer1, answer2};
-    }
-
+    /**
+     * Method for receving number of equation from list of possible equations. Entered by user.
+     * @return number of equation
+     */
     public int receiveEquation() {
         while (true) {
             try {
@@ -61,6 +90,10 @@ public class DataReceiver {
         }
     }
 
+    /**
+     * Method for receving number of equations system from list of possible equations. Entered by user.
+     * @return number of equations system
+     */
     public int receiveSystem() {
         while (true) {
             try {
@@ -85,6 +118,10 @@ public class DataReceiver {
         }
     }
 
+    /**
+     * Method for receving coefficients a,b (is segment for root searching) and e (is necessary accuracy)
+     * @return array with a,b,e coefficients
+     */
     public double[] receiveCoefficients() {
         while (true) {
             try {
