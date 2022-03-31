@@ -34,5 +34,5 @@ public class Main {
         System.out.println("\n\n\n\n\n");
         System.out.println("Lab work #2 demonstrating system is finished!");
     }
-    
+
 }
