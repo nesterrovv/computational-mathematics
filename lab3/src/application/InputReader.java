@@ -5,10 +5,21 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Class for reading user input. Input uses for initialization.
+ * necessary values of function, bottom and top limits and accuracy.
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/11/2022
+ */
 public class InputReader {
 
+    /** Class for reading user input to stdin. */
     private final static Scanner scanner = new Scanner(System.in);
 
+    /** Function for receiving number of function from user.
+     * @return function for integrating
+     */
     public static FunctionManipulator getFunction() {
         System.out.println("List of functions:");
         System.out.println("1) " + FunctionManipulator.FIRST +
@@ -38,6 +49,9 @@ public class InputReader {
         }
     }
 
+    /** Function for receiving value of bottom limit from user.
+     * @return bottom limit of function for integrating
+     */
     public static double getBottomLimit() {
         System.out.print("Enter bottom limit: ");
         while (true) {
@@ -53,6 +67,9 @@ public class InputReader {
         }
     }
 
+    /** Function for receiving value of top limit from user.
+     * @return top limit of function for integrating
+     */
     public static double getTopLimit() {
         System.out.print("Enter top limit: ");
         while (true) {
@@ -68,6 +85,9 @@ public class InputReader {
         }
     }
 
+    /** Function for receiving value of necessary accuracy from user.
+     * @return accuracy for function integrate counting
+     */
     public static double getAccuracy() {
         double accuracy;
         System.out.print("Enter necessary accuracy: ");

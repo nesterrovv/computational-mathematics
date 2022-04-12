@@ -3,8 +3,19 @@ package application;
 import calculations.FunctionManipulator;
 import calculations.SimpsonMethodSolver;
 
+/**
+ * Main class of this lab work. Contains entry point.
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/11/2022
+ */
 public class Runner {
 
+    /**
+     * Entry point method.
+     * Uses for communication with user and printing result of calculation.
+     * @param args is command line arguments. Not used here.
+     */
     public static void main(String[] args) {
         System.out.println("Simpson method solver system has been started!");
         SimpsonMethodSolver solver = new SimpsonMethodSolver(InputReader.getFunction(), InputReader.getBottomLimit(),

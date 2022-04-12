@@ -1,39 +1,78 @@
 package calculations;
 
+/**
+ * Class with Simpson method implementation.
+ * Used for numerical integrating.
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/11/2022
+ */
 public class SimpsonMethodSolver {
 
+    /** Field for function storing. */
     private final FunctionManipulator function;
+    /** Field for bottom limit storing. */
     private final double bottomLimit;
+    /** Field for top limit storing. */
     private final double topLimit;
+    /** Field for accuracy storing. */
     private final double accuracy;
+    /** Field for steps amount storing. */
     private int steps;
+    /** Field for error value storing. */
     private double error;
+    /** Field for result value storing. */
     private double result;
 
+    /** Method for function field value getting.
+     * @return function field value
+     */
     public FunctionManipulator getFunction() {
         return function;
     }
 
+    /** Method for bottom limit field value getting.
+     * @return bottom limit field value
+     */
     public double getBottomLimit() {
         return bottomLimit;
     }
 
+    /** Method for top limit field value getting.
+     * @return top limit field value
+     */
     public double getTopLimit() {
         return topLimit;
     }
 
+    /** Method for steps field value getting.
+     * @return steps field value
+     */
     public int getSteps() {
         return steps;
     }
 
+    /** Method for error field value getting.
+     * @return error field value
+     */
     public double getError() {
         return error;
     }
 
+    /** Method for result field value getting.
+     * @return result field value
+     */
     public double getResult() {
         return result;
     }
 
+    /**
+     * Constructor of this class.
+     * @param function is function for integrating
+     * @param bottomLimit is bottom limit for integrating
+     * @param topLimit is top limit for integrating
+     * @param accuracy is necessary accuracy for integrating
+     */
     public SimpsonMethodSolver(FunctionManipulator function, double bottomLimit, double topLimit, double accuracy) {
         this.function = function;
         this.accuracy = accuracy;
@@ -46,6 +85,10 @@ public class SimpsonMethodSolver {
         }
     }
 
+    /**
+     * Method for numerical integrating of given function.
+     * @return result code of integrating
+     */
     public int integrate() {
         double firstBorder;
         double secondBorder;
