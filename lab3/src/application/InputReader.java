@@ -24,7 +24,8 @@ public class InputReader {
         System.out.println("List of functions:");
         System.out.println("1) " + FunctionManipulator.FIRST +
                          "\n2) " + FunctionManipulator.SECOND +
-                         "\n3) " + FunctionManipulator.THIRD);
+                         "\n3) " + FunctionManipulator.THIRD +
+                         "\n4) " + FunctionManipulator.FOURTH);
         System.out.print("Choose a number of function for integrating: ");
         while (true) {
             try {
@@ -35,6 +36,8 @@ public class InputReader {
                         return FunctionManipulator.SECOND;
                     case 3:
                         return FunctionManipulator.THIRD;
+                    case 4:
+                        return FunctionManipulator.FOURTH;
                     default:
                         System.out.println("Number of function must be 1, 2 or 3.");
                         break;

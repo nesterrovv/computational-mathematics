@@ -14,7 +14,8 @@ public enum FunctionManipulator {
     /** Second function. */
     SECOND("y = sin(x)"),
     /** Third function. */
-    THIRD("y = 1/x");
+    THIRD("y = 1/x"),
+    FOURTH("y = sin(x) /x");
 
     /** Field for function storing. */
     private final String function;
@@ -39,6 +40,8 @@ public enum FunctionManipulator {
                 return Math.sin(x);
             case THIRD:
                 return 1 / x;
+            case FOURTH:
+                return Math.sin(x) / x;
             default:
                 return 0;
         }
