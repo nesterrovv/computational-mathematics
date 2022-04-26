@@ -4,10 +4,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class for storing set of functions
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/25/2022
+ */
 public class Functions {
 
+    /** Field for storing number and functon description */
     private static final Map<Integer, Function> functions;
 
+    /** Initialization block for creating 3 examples of functions */
     static {
         functions = new HashMap<>();
         functions.put(1, new Function(Arrays.asList(
@@ -40,6 +48,11 @@ public class Functions {
         )));
     }
 
+    /**
+     * Method for receiving function
+     * @param choose number of necessary function
+     * @return necessary function
+     */
     public static Function getFunction(int choose) {
         if (choose <= 1 || choose > functions.size()) {
             choose = 1;
@@ -47,6 +60,10 @@ public class Functions {
         return functions.get(choose);
     }
 
+    /**
+     * Method for receiving all possible functions
+     * @return map of functions
+     */
     public static Map<Integer, Function> getFunctions() {
         return functions;
     }

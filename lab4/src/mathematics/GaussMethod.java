@@ -2,8 +2,21 @@ package mathematics;
 
 import java.util.Arrays;
 
+/**
+ * Class for realization of Gauss method for
+ * solving system of equations
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/25/2022
+ */
 public class GaussMethod {
 
+    /**
+     * Gauss method implementation
+     * @param matrix is matrix of coefficients
+     * @param results is vector-column of right-side values for system of equations
+     * @return matrix of calculated results
+     */
     public static double[][] gaussMethod(double[][] matrix, double[] results) {
         double[][] fullMatrix = createFullMatrix(matrix, results);
         double[][] copyMatrix = copyMatrix(fullMatrix);
@@ -20,6 +33,12 @@ public class GaussMethod {
         return copyMatrix;
     }
 
+    /**
+     * Method for receiving column of unknown variables
+     * @param matrix is matrix of coefficients
+     * @param results is vector-column of right-side values for system of equations
+     * @return necessary column
+     */
     public static double[] getUnknownColumn(double[][] matrix, double[] results) {
         double[][] triangle = gaussMethod(matrix, results);
         double[] unknowns = getNullColumn(results.length);
@@ -37,6 +56,12 @@ public class GaussMethod {
 
     }
 
+    /**
+     * Method for crating full matrix (coefficients + column of answers)
+     * @param matrix is matrix of coefficients
+     * @param result is vector-column of right-side values for system of equations
+     * @return full matrix for system of equations
+     */
     private static double[][] createFullMatrix(double[][] matrix, double[] result) {
         double[][] fullMatrix = new double[matrix.length][matrix.length + 1];
         for (int i = 0; i < matrix.length; i++) {
@@ -48,6 +73,11 @@ public class GaussMethod {
         return fullMatrix;
     }
 
+    /**
+     * Method for matrix coping
+     * @param matrix is matrix for coping
+     * @return copy of given matrix
+     */
     private static double[][] copyMatrix(double[][] matrix) {
         double[][] result = new double[matrix.length][matrix.length + 1];
         for (int i = 0; i < matrix.length; i++) {
@@ -56,6 +86,11 @@ public class GaussMethod {
         return result;
     }
 
+    /**
+     * Method for getting zero-column
+     * @param size is necessary size of zero-column
+     * @return zero column with necessary size
+     */
     private static double[] getNullColumn(int size) {
         double[] column = new double[size];
         Arrays.stream(column)
@@ -63,8 +98,14 @@ public class GaussMethod {
         return column;
     }
 
+    /**
+     * Method for checking if given row is zero-row
+     * @param row is given row
+     * @return result of row checking to 0 in each item
+     */
     public static boolean isnNullRow(double[] row) {
         return Arrays.stream(row)
                 .allMatch(el -> el == 0);
     }
+
 }

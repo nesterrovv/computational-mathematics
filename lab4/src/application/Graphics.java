@@ -6,11 +6,23 @@ import org.knowm.xchart.*;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 import org.knowm.xchart.style.theme.GGPlot2Theme;
-
 import java.awt.*;
 
+/**
+ * Class with application graphic part. Uses AWT and XChart libraries.
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/25/2022
+ */
 public class Graphics {
 
+    /**
+     * Method for drawing function graph
+     * @param function is function for approximation
+     * @param firstApproximation is first approximation function
+     * @param secondApproximation is second approximation function
+     * @param exclusion is exclusion point for function which was drawn
+     */
     public static void drawGraphic(Function function, Function firstApproximation, Function secondApproximation,
                                    Point exclusion) {
         double[] xArray = function.getArrayX();

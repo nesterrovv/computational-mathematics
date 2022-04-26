@@ -5,17 +5,25 @@ import approximationMethods.Approximations;
 import mathematics.Function;
 import mathematics.Functions;
 import mathematics.Point;
-
 import java.util.*;
 
+/**
+ * Class for working with user input and with output for user
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/25/2022
+ */
 public class IOManipulator {
 
+    /** Scanner for reading from stdin */
     private static final Scanner scanner = new Scanner(System.in);
 
+    /** Method for printing hello-string for user */
     public static void introduction() {
         System.out.println("Lab work #4. Least squares approximation method application by I.Nesterov is started!\n");
     }
 
+    /** Method for printing set of possible functions for user */
     public static void showFunctions() {
         Map<Integer, Function> functions = Functions.getFunctions();
         for (int i = 1; i <= functions.size(); i++) {
@@ -24,6 +32,7 @@ public class IOManipulator {
         }
     }
 
+    /** Method for printing table of points for user */
     private static void showTable(Function function) {
         System.out.print("x:| ");
         List<Point> points = function.getPoints();
@@ -38,6 +47,10 @@ public class IOManipulator {
         System.out.println("|");
     }
 
+    /**
+     * Method for receiving number of function from user
+     * @return number of function which is necessary for user
+     */
     public static int getFunctionChoose() {
         while (true) {
             try {
@@ -71,6 +84,10 @@ public class IOManipulator {
         }
     }
 
+    /**
+     * Method for receiving number of approximation function from user
+     * @return number of approximation function which is necessary for user
+     */
     public static int getApproximationChoose() {
         while (true) {
             try {
@@ -104,12 +121,17 @@ public class IOManipulator {
         }
     }
 
+    /** Method for printing set of possible approximation functions for user */
     public static void printAllTypesOfApproximations() {
         for (Map.Entry<Integer, Approximation> entry : Approximations.getApproximations().entrySet()) {
             System.out.println(entry.getKey() + "." + entry.getValue().typeOfApproximation());
         }
     }
 
+    /**
+     * Method for parameters printing
+     * @param params is array of parameters
+     */
     public static void printParams(double[] params) {
         for (int i = 0; i < params.length; i++) {
             System.out.println("a[" + i + "]= " + params[i]);
@@ -117,7 +139,12 @@ public class IOManipulator {
         System.out.println();
     }
 
+    /**
+     * Method for deviation printing
+     * @param deviation is value of deviation
+     */
     public static void printDeviation(double deviation) {
         System.out.println("Deviation measure: " + deviation);
     }
+
 }
