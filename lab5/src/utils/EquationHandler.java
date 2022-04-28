@@ -1,7 +1,7 @@
 package utils;
 
 import exceptions.InvalidDataException;
-import milnMethod.MilneMethod;
+import milneMethod.MilneMethod;
 import org.nfunk.jep.JEP;
 
 public class EquationHandler {

@@ -1,7 +1,7 @@
 package controllers;
 
 import exceptions.InvalidDataException;
-import milnMethod.MilneMethod;
+import milneMethod.MilneMethod;
 import utils.EquationHandler;
 import utils.Point;
 import javafx.collections.FXCollections;
@@ -13,7 +13,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -45,13 +44,13 @@ public class MilneController {
     private TableColumn<?, ?> yCol;
 
     @FXML
-    private Button test1;
+    private Button example1;
 
     @FXML
-    private Button test2;
+    private Button example2;
 
     @FXML
-    private Button test3;
+    private Button example3;
 
     @FXML
     private TextArea f_tf;
@@ -131,15 +130,7 @@ public class MilneController {
 
         });
 
-        test2.setOnAction(event -> {
-            f_tf.setText("2*y/x + 3/x^2");
-            x0.setText("1");
-            y0.setText("-1");
-            e.setText("0.0000000000001");
-            rightBorder.setText("10");
-        });
-
-        test1.setOnAction(event -> {
+        example1.setOnAction(event -> {
             f_tf.setText("2*y/(x+1) + (x+1)^3");
             x0.setText("0");
             y0.setText("0.5");
@@ -147,7 +138,15 @@ public class MilneController {
             rightBorder.setText("5");
         });
 
-        test3.setOnAction(event -> {
+        example2.setOnAction(event -> {
+            f_tf.setText("2*y/x + 3/x^2");
+            x0.setText("1");
+            y0.setText("-1");
+            e.setText("0.0000000000001");
+            rightBorder.setText("10");
+        });
+
+        example3.setOnAction(event -> {
             f_tf.setText("3*x^2*e^(-x) - (x+1)*y/x");
             x0.setText("1");
             y0.setText("0");

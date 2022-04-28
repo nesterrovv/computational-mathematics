@@ -1,4 +1,4 @@
-package milnMethod;
+package milneMethod;
 
 import org.nfunk.jep.JEP;
 
