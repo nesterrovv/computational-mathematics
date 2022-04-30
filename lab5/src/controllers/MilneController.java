@@ -17,6 +17,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+/**
+ * Class with realization list of some methods for using in JavaFX GUI
+ * shell of this program.
+ * @author Ivan Nesterov
+ * @version 1.0
+ * @since 4/30/2022
+ */
 public class MilneController {
 
     @FXML
@@ -69,6 +76,9 @@ public class MilneController {
 
     ObservableList<Point> points = FXCollections.observableArrayList();
 
+    /**
+     * Method for defining all necessary elements in GUI
+     */
     @FXML
     void initialize() {
 
@@ -156,6 +166,11 @@ public class MilneController {
 
     }
 
+    /**
+     * Method for setting some meta-int for GUI and content for it
+     * @param title
+     * @param message
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -164,6 +179,14 @@ public class MilneController {
         alert.showAndWait();
     }
 
+    /**
+     * Method for printing result of calculation in field under the
+     * plot area.
+     * @param h is step value
+     * @param x0 is left border of interval of plot drawing
+     * @param xn is right border of interval of plot drawing
+     * @param n is amount of defined points
+     */
     private void showAnswer(Double h, Double x0, Double xn, int n) {
         answerTextArea.setWrapText(true);
         String ans = "Step: " + h + "\n" + "\n" +
@@ -172,6 +195,11 @@ public class MilneController {
         answerTextArea.setText(ans);
     }
 
+    /**
+     * Method for plot drawing
+     * @param xList is set of x coordinate values
+     * @param yList is set of y coordinate values
+     */
     private void drawPlot(List<Double> xList, List<Double> yList) {
         if (!lineChart.getData().isEmpty()) {
             while (!lineChart.getData().isEmpty()) {
@@ -189,6 +217,5 @@ public class MilneController {
         lineChart.setLegendVisible(false);
         lineChart.getData().add(series0);
     }
-
 
 }

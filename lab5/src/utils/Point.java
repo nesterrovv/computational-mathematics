@@ -2,7 +2,7 @@ package utils;
 
 import java.math.BigDecimal;
 
-public class Point{
+public class Point {
 
     private BigDecimal x;
     private BigDecimal y;
